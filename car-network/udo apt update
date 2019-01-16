@@ -1,0 +1,8 @@
+[0;1;31m●[0m mongodb.service
+   Loaded: masked (/dev/null; bad)
+   Active: [0;1;31mfailed[0m (Result: signal) since Fri 2018-12-28 12:27:53 PST; 3min 41s ago
+ Main PID: 4010 (code=killed, signal=ABRT)
+
+Dec 28 12:26:50 ubuntu systemd[1]: Started An object/document-oriented database.
+Dec 28 12:27:53 ubuntu systemd[1]: [0;1;39m[0;1;31m[0;1;39mmongodb.service: Main process exited, code=killed, status=6/ABRT[0m
+Dec 28 12:27:53 ubuntu systemd[1]: [0;1;39m[0;1;31m[0;1;39mmongodb.service: Failed with result 'signal'.[0m

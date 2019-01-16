@@ -1,0 +1,51 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Write your model definitions here
+ */
+
+namespace org.example.biznet
+
+asset Car identified by fahrNR {
+  o String kennzeichen
+  o String fahrNR
+  o String km
+  o String pos
+  o String schaden
+  o Boolean status
+  --> User owner	
+}
+
+participant User identified by UserId {
+  o String UserId
+  o String UserName
+}
+
+/**
+ * A transaction which allows Ownsers to get other
+ * Cars
+ */
+transaction TradeCar {
+  --> Car car
+  --> User newOwner
+}
+
+/**
+ * A notification event to be emitted whenever
+ * any Car is traded
+ */
+event TradeNotification {
+  --> Car car
+}

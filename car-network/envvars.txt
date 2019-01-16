@@ -1,0 +1,16 @@
+COMPOSER_CARD=admin@car-network
+COMPOSER_NAMESPACES=never
+COMPOSER_AUTHENTICATION=true
+COMPOSER_MULTIUSER=true
+COMPOSER_PROVIDERS='{
+  "github": {
+    "provider": "github",
+    "module": "passport-github",
+    "clientID": "c5998b6632a83ffc99aa",
+    "clientSecret": "42d6d0bf3fb4e56195acb457c6e646c746cf5ab3",
+    "authPath": "/auth/github",
+    "callbackURL": "/auth/github/callback",
+    "successRedirect": "/",
+    "failureRedirect": "/"
+  }
+}'
