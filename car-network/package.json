@@ -3,7 +3,7 @@
     "composer": "^0.20.1"
   },
   "name": "car-network",
-  "version": "1.0.6-deploy.21",
+  "version": "1.0.6-deploy.32",
   "description": "blockchain for car-sharing",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/car-network.bna",
