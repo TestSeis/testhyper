@@ -1,6 +1,4 @@
  #!/bin/bash
-composer card delete --card admin@car-network
-composer card import -f admin.card
 composer archive create --sourceType dir --sourceName .
-composer network install --archiveFile car-network.bna --card PeerAdmin@hlfv1
-composer network start -c PeerAdmin@hlfv1 -V 1.0.6-deploy.32 -n car-network -A admin -S adminpw
+composer network install --archiveFile car-network@1.0.6-deploy.32.bna --card PeerAdmin@hlfv1
+composer network start --networkName car-network --networkVersion 1.0.6-deploy.32 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file car-admin.card
