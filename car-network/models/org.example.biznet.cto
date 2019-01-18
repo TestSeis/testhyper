@@ -12,40 +12,85 @@
  * limitations under the License.
  */
 
-/**
- * Write your model definitions here
- */
 
 namespace org.example.biznet
 
 asset Car identified by fahrNR {
-  o String kennzeichen
   o String fahrNR
+  o String kennzeichen
   o String km
   o String pos
   o String schaden
+  o String schadenHash
   o Boolean status
-  --> User owner	
+  --> Trader owner	
 }
 
-participant User identified by UserId {
-  o String UserId
-  o String UserName
+
+asset ControllerCar identified by fahrNR {
+  o String fahrNR
+  o String kennzeichen
+  o String km
+  o String schaden
 }
 
-/**
- * A transaction which allows Ownsers to get other
- * Cars
- */
-transaction TradeCar {
-  --> Car car
-  --> User newOwner
+asset UserCar identified by fahrNR {
+  o String fahrNR
+  o String kennzeichen
+  o String km
+  o Boolean status
+  o String pos
 }
 
-/**
- * A notification event to be emitted whenever
- * any Car is traded
- */
-event TradeNotification {
-  --> Car car
+participant Trader identified by tradeId {
+    o String tradeId
+    o String firstName
+    o String lastName
+    o String password
+    o String role
+}
+transaction Trade {
+    --> Car car
+    --> Trader newOwner
+    o String km
+}
+
+transaction ChangeStatus{
+    --> Car car
+}
+
+transaction ChangeKennzeichen{
+    --> Car car
+    o String kennzeichen
+}
+
+transaction ChangeKm{
+    --> Car car
+    o String km
+}
+
+@returns(ControllerCar)
+transaction CarForController{
+ 	--> Car car  
+}
+
+@returns(UserCar)
+transaction CarForUser{
+ 	--> Car car  
+}
+
+@returns(String)
+transaction getKennzeichen{
+ 	--> Car car  
+}
+
+@returns(String)
+transaction getFahrNr{
+ 	--> Car car  
+}
+
+@returns(Trader)
+transaction Login{
+ 	o String tradeId
+    o String passwort
 }
