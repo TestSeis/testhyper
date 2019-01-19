@@ -64,6 +64,12 @@ transaction ChangeKennzeichen{
     o String kennzeichen
 }
 
+transaction ChangeSchaden{
+    --> Car car
+    o String schaden
+    o String schadenHash
+}
+
 transaction ChangeKm{
     --> Car car
     o String km
