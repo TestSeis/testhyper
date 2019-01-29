@@ -93,7 +93,7 @@ public class CarMenu extends AppCompatActivity {
         queue.add(jsonObjRequest);
     }
 
-    public void makeTransaction(String s, String u, String km){
+    public void makeTransaction(final String s, final String u, String km){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("KM eingeben");
 
@@ -107,6 +107,35 @@ public class CarMenu extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String Text = input.getText().toString();
                 m_Text[0] = Text;
+                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("$class", "org.example.biznet.Trade");
+                    jsonObject.put("car", "resource:org.example.biznet.Car#" + s);
+                    jsonObject.put("newOwner", "resource:org.example.biznet.Trader#" + u);
+                    jsonObject.put("km", m_Text[0]);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                JsonObjectRequest jsonObjRequest = new JsonObjectRequest
+                        (Request.Method.POST, preferences.getString("Url","")+"/api/Trade?access_token="+preferences.getString("Code",""), jsonObject, new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+
+                                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+
+                queue.add(jsonObjRequest);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -119,35 +148,7 @@ public class CarMenu extends AppCompatActivity {
         builder.show();
 
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("$class", "org.example.biznet.Trade");
-            jsonObject.put("car", "resource:org.example.biznet.Car#" + s);
-            jsonObject.put("newOwner", "resource:org.example.biznet.Trader#" + u);
-            jsonObject.put("km", m_Text[0]);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        JsonObjectRequest jsonObjRequest = new JsonObjectRequest
-                (Request.Method.POST, preferences.getString("Url","")+"/api/CarForUser?access_token="+preferences.getString("Code",""), jsonObject, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
 
-                    }
-                },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                                //Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-
-        queue.add(jsonObjRequest);
     }
 
     public void logout(View v){
